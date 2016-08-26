@@ -51,7 +51,7 @@ bool state = true;
 
 - (void)processImage:(Mat &)image {
     Mat gray, bw;
-    cvtColor(image.clone(), gray, CV_RGB2GRAY);
+    cvtColor(image, gray, CV_RGB2GRAY);
     adaptiveThreshold(gray, bw, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 25, 25);
     
     vector<vector<cv::Point>> rects;
@@ -66,7 +66,8 @@ bool state = true;
         }
     }
     
-    UIImage * outimage = MatToUIImage(gray);
+    cvtColor(image, image, CV_BGR2RGB);
+    UIImage * outimage = MatToUIImage(image);
     dispatch_async(dispatch_get_main_queue(), ^{
         _imageView.image = outimage;
     });
