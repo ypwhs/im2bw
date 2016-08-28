@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "im2bw/ViewController.mm"
-            timestampString = "493907237.094918"
+            timestampString = "494085536.733785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "-processImage:"
             landmarkType = "5">
          </BreakpointContent>

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A15F25F81D72FDD900874C61 /* keras_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = A15F25F61D72FDD900874C61 /* keras_model.mm */; };
+		A15F25FA1D73180100874C61 /* model.txt in Resources */ = {isa = PBXBuildFile; fileRef = A15F25F91D73180100874C61 /* model.txt */; };
 		A1C2683A1D6756AA003EC205 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C268391D6756AA003EC205 /* main.m */; };
 		A1C2683D1D6756AA003EC205 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C2683C1D6756AA003EC205 /* AppDelegate.m */; };
 		A1C268401D6756AA003EC205 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1C2683F1D6756AA003EC205 /* ViewController.mm */; };
@@ -41,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A15F25F61D72FDD900874C61 /* keras_model.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = keras_model.mm; sourceTree = "<group>"; };
+		A15F25F71D72FDD900874C61 /* keras_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keras_model.h; sourceTree = "<group>"; };
+		A15F25F91D73180100874C61 /* model.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model.txt; sourceTree = "<group>"; };
 		A1C268351D6756AA003EC205 /* im2bw.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = im2bw.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1C268391D6756AA003EC205 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A1C2683B1D6756AA003EC205 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -130,6 +135,9 @@
 				A1C2683C1D6756AA003EC205 /* AppDelegate.m */,
 				A1C2683E1D6756AA003EC205 /* ViewController.h */,
 				A1C2683F1D6756AA003EC205 /* ViewController.mm */,
+				A15F25F71D72FDD900874C61 /* keras_model.h */,
+				A15F25F61D72FDD900874C61 /* keras_model.mm */,
+				A15F25F91D73180100874C61 /* model.txt */,
 				A1C268721D675A76003EC205 /* PrefixHeader.pch */,
 				A1C268411D6756AA003EC205 /* Main.storyboard */,
 				A1C268441D6756AA003EC205 /* Assets.xcassets */,
@@ -269,6 +277,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A15F25FA1D73180100874C61 /* model.txt in Resources */,
 				A1C268481D6756AA003EC205 /* LaunchScreen.storyboard in Resources */,
 				A1C268451D6756AA003EC205 /* Assets.xcassets in Resources */,
 				A1C268431D6756AA003EC205 /* Main.storyboard in Resources */,
@@ -296,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A15F25F81D72FDD900874C61 /* keras_model.mm in Sources */,
 				A1C268401D6756AA003EC205 /* ViewController.mm in Sources */,
 				A1C2683D1D6756AA003EC205 /* AppDelegate.m in Sources */,
 				A1C2683A1D6756AA003EC205 /* main.m in Sources */,

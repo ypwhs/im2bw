@@ -12,6 +12,7 @@
 #import <opencv2/imgcodecs/ios.h>
 #import <opencv2/highgui/highgui.hpp>
 #import <opencv2/imgproc/imgproc.hpp>
+#import "keras_model.h"
 
 @interface ViewController : UIViewController <CvVideoCameraDelegate>
 
