@@ -68,33 +68,48 @@ bool state = true;
     cv::resize(img, img, size);
     int w = img.cols, h = img.rows;
     int x = (28 - w)/2, y = (28 - h)/2;
-    img.copyTo( outimg(cv::Rect(x, y, w, h)) );
-    
-//    UIImage * outimage = MatToUIImage(outimg);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        _imageView2.image = outimage;
-//    });
-    
+    img.copyTo(outimg(cv::Rect(x, y, w, h)));
     return outimg;
 }
 
-int predict(cv::Mat img){   //预测数字
-    vector<vector<vector<float>>> data;
-    vector<vector<float>> d;
+//int predict(cv::Mat img){   //预测数字 conv
+//    cv::bitwise_not(img, img);
+//    vector<vector<vector<float>>> data;
+//    vector<vector<float>> d;
+//    for (int i = 0; i < img.rows; i++) {
+//        vector<float> r;
+//        for (int j = 0; j < img.cols; j++) {
+//            r.push_back(img.at<uchar>(i, j)/255.0);
+//        }
+//        d.push_back(r);
+//    }
+//    data.push_back(d);
+//    
+//    DataChunk * dc = new DataChunk2D();
+//    dc->set_data(data); //Mat 转 DataChunk
+//    
+//    vector<float> predictions = model->compute_output(dc);
+////    predictions[10] = 0;
+//
+//    auto max = max_element(predictions.begin(), predictions.end());
+//    int index = (int)distance(predictions.begin(), max);
+//    return index;
+//}
+
+int predict(cv::Mat img){   //预测数字 mlp
+    cv::bitwise_not(img, img);
+    vector<float> data;
     for (int i = 0; i < img.rows; i++) {
-        vector<float> r;
         for (int j = 0; j < img.cols; j++) {
-            r.push_back(img.at<uchar>(i, j)/255.0);
+            data.push_back(img.at<uchar>(i, j)/255.0);
         }
-        d.push_back(r);
     }
-    data.push_back(d);
     
-    DataChunk * dc = new DataChunk2D();
+    DataChunk * dc = new DataChunkFlat();
     dc->set_data(data); //Mat 转 DataChunk
     
     vector<float> predictions = model->compute_output(dc);
-    predictions[10] = 0;
+//    predictions[10] = 0;
     
     auto max = max_element(predictions.begin(), predictions.end());
     int index = (int)distance(predictions.begin(), max);
@@ -115,14 +130,14 @@ int predict(cv::Mat img){   //预测数字
         
         int x = rect.x, y = rect.y;
         int w = rect.width, h = rect.height;
-        if( w < 100 && h < 100 && h > 10 ) {
+        float hw = float(h) / w;
+        if( w < 100 && h < 100 && h > 10 && 1.1 < hw &&  hw < 5) {
             cv::Mat res = [self resize:bw(rect).clone()];
-            
+            cv::rectangle(image, rect, cv::Scalar(0, 255, 0, 255), 0.5);
             int index = predict(res);
             if(index != 10){
-                char tmp[2];
+                char tmp[10];
                 sprintf(tmp, "%d", index);
-                cv::rectangle(image, rect, cv::Scalar(0, 255, 0, 255), 0.5);
                 cv::putText(image, tmp, cv::Point(x, y), cv::FONT_HERSHEY_DUPLEX, 0.5, cv::Scalar(255, 0, 0));
             }
         }

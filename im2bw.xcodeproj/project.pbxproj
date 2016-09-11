@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		A15F25F81D72FDD900874C61 /* keras_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = A15F25F61D72FDD900874C61 /* keras_model.mm */; };
 		A15F25FA1D73180100874C61 /* model.txt in Resources */ = {isa = PBXBuildFile; fileRef = A15F25F91D73180100874C61 /* model.txt */; };
+		A15F260E1D73C0A700874C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268791D675AB5003EC205 /* AVFoundation.framework */; };
+		A15F26251D73C25E00874C61 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C2687B1D675ABB003EC205 /* AssetsLibrary.framework */; };
+		A15F26271D73C27800874C61 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268771D675AAC003EC205 /* CoreMedia.framework */; };
 		A1C2683A1D6756AA003EC205 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C268391D6756AA003EC205 /* main.m */; };
 		A1C2683D1D6756AA003EC205 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C2683C1D6756AA003EC205 /* AppDelegate.m */; };
 		A1C268401D6756AA003EC205 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A1C2683F1D6756AA003EC205 /* ViewController.mm */; };
@@ -19,10 +22,6 @@
 		A1C2685E1D6756AA003EC205 /* im2bwUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C2685D1D6756AA003EC205 /* im2bwUITests.m */; };
 		A1C268711D6757D5003EC205 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268701D6757D5003EC205 /* opencv2.framework */; };
 		A1C268741D675A9A003EC205 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268731D675A9A003EC205 /* Accelerate.framework */; };
-		A1C268761D675AA3003EC205 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268751D675AA3003EC205 /* CoreImage.framework */; };
-		A1C268781D675AAC003EC205 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268771D675AAC003EC205 /* CoreMedia.framework */; };
-		A1C2687A1D675AB5003EC205 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268791D675AB5003EC205 /* AVFoundation.framework */; };
-		A1C2687C1D675ABB003EC205 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C2687B1D675ABB003EC205 /* AssetsLibrary.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,7 +64,6 @@
 		A1C268701D6757D5003EC205 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		A1C268721D675A76003EC205 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		A1C268731D675A9A003EC205 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		A1C268751D675AA3003EC205 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		A1C268771D675AAC003EC205 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A1C268791D675AB5003EC205 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A1C2687B1D675ABB003EC205 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -76,10 +74,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1C2687C1D675ABB003EC205 /* AssetsLibrary.framework in Frameworks */,
-				A1C2687A1D675AB5003EC205 /* AVFoundation.framework in Frameworks */,
-				A1C268781D675AAC003EC205 /* CoreMedia.framework in Frameworks */,
-				A1C268761D675AA3003EC205 /* CoreImage.framework in Frameworks */,
+				A15F26271D73C27800874C61 /* CoreMedia.framework in Frameworks */,
+				A15F26251D73C25E00874C61 /* AssetsLibrary.framework in Frameworks */,
+				A15F260E1D73C0A700874C61 /* AVFoundation.framework in Frameworks */,
 				A1C268741D675A9A003EC205 /* Accelerate.framework in Frameworks */,
 				A1C268711D6757D5003EC205 /* opencv2.framework in Frameworks */,
 			);
@@ -108,7 +105,6 @@
 				A1C2687B1D675ABB003EC205 /* AssetsLibrary.framework */,
 				A1C268791D675AB5003EC205 /* AVFoundation.framework */,
 				A1C268771D675AAC003EC205 /* CoreMedia.framework */,
-				A1C268751D675AA3003EC205 /* CoreImage.framework */,
 				A1C268731D675A9A003EC205 /* Accelerate.framework */,
 				A1C268371D6756AA003EC205 /* im2bw */,
 				A1C268511D6756AA003EC205 /* im2bwTests */,
