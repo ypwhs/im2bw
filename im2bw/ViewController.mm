@@ -23,6 +23,90 @@ using namespace keras;
 CvVideoCamera * camera;
 KerasModel * model;
 
+/*
+BNNSActivation relu = {
+    .function = BNNSActivationFunctionRectifiedLinear,
+    .alpha = 0,
+    .beta = 0,
+};
+
+BNNSVectorDescriptor in_vec = {
+    .size = 784,
+    .data_type = BNNSDataTypeFloat32
+};
+
+BNNSVectorDescriptor layer1_vec = {
+    .size = 512,
+    .data_type = BNNSDataTypeFloat32
+};
+
+BNNSVectorDescriptor layer2_vec = {
+    .size = 512,
+    .data_type = BNNSDataTypeFloat32
+};
+
+BNNSVectorDescriptor out_vec = {
+    .size = 11,
+    .data_type = BNNSDataTypeFloat32
+};
+
+float * w1 = (float*)malloc(in_vec.size*layer1_vec.size*sizeof(float));
+float * b1 = (float*)malloc(in_vec.size*layer1_vec.size*sizeof(float));
+
+float * w2 = (float*)malloc(layer1_vec.size*layer2_vec.size*sizeof(float));
+float * b2 = (float*)malloc(layer1_vec.size*layer2_vec.size*sizeof(float));
+
+float * w3 = (float*)malloc(layer2_vec.size*out_vec.size*sizeof(float));
+float * b3 = (float*)malloc(layer2_vec.size*out_vec.size*sizeof(float));
+
+BNNSFullyConnectedLayerParameters layer1_params = {
+    .in_size = in_vec.size,
+    .out_size = layer1_vec.size,
+    .activation = relu,
+    .weights = {
+        .data_type = BNNSDataTypeFloat32,
+        .data = w1
+    },
+    .bias = {
+        .data_type = BNNSDataTypeFloat32,
+        .data = b1
+    }
+};
+
+BNNSFullyConnectedLayerParameters layer2_params = {
+    .in_size = layer1_vec.size,
+    .out_size = layer2_vec.size,
+    .activation = relu,
+    .weights = {
+        .data_type = BNNSDataTypeFloat32,
+        .data = w2
+    },
+    .bias = {
+        .data_type = BNNSDataTypeFloat32,
+        .data = b2
+    }
+};
+
+BNNSFullyConnectedLayerParameters layer3_params = {
+    .in_size = layer2_vec.size,
+    .out_size = out_vec.size,
+    .activation = relu,
+    .weights = {
+        .data_type = BNNSDataTypeFloat32,
+        .data = w3
+    },
+    .bias = {
+        .data_type = BNNSDataTypeFloat32,
+        .data = b3
+    }
+};
+
+BNNSFilter layer1 = BNNSFilterCreateFullyConnectedLayer(&in_vec, &layer1_vec, &layer1_params, NULL);
+BNNSFilter layer2 = BNNSFilterCreateFullyConnectedLayer(&layer1_vec, &layer2_vec, &layer2_params, NULL);
+BNNSFilter layer3 = BNNSFilterCreateFullyConnectedLayer(&layer2_vec, &out_vec, &layer3_params, NULL);
+
+*/
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -72,30 +156,33 @@ bool state = true;
     return outimg;
 }
 
-//int predict(cv::Mat img){   //预测数字 conv
-//    cv::bitwise_not(img, img);
-//    vector<vector<vector<float>>> data;
-//    vector<vector<float>> d;
-//    for (int i = 0; i < img.rows; i++) {
-//        vector<float> r;
-//        for (int j = 0; j < img.cols; j++) {
-//            r.push_back(img.at<uchar>(i, j)/255.0);
-//        }
-//        d.push_back(r);
-//    }
-//    data.push_back(d);
-//    
-//    DataChunk * dc = new DataChunk2D();
-//    dc->set_data(data); //Mat 转 DataChunk
-//    
-//    vector<float> predictions = model->compute_output(dc);
-////    predictions[10] = 0;
-//
-//    auto max = max_element(predictions.begin(), predictions.end());
-//    int index = (int)distance(predictions.begin(), max);
-//    return index;
-//}
+//#define conv
+#ifdef conv
+int predict(cv::Mat img){   //预测数字 conv
+    cv::bitwise_not(img, img);
+    vector<vector<vector<float>>> data;
+    vector<vector<float>> d;
+    for (int i = 0; i < img.rows; i++) {
+        vector<float> r;
+        for (int j = 0; j < img.cols; j++) {
+            r.push_back(img.at<uchar>(i, j)/255.0);
+        }
+        d.push_back(r);
+    }
+    data.push_back(d);
+    
+    DataChunk * dc = new DataChunk2D();
+    dc->set_data(data); //Mat 转 DataChunk
+    
+    vector<float> predictions = model->compute_output(dc);
+//    predictions[10] = 0;
 
+    auto max = max_element(predictions.begin(), predictions.end());
+    int index = (int)distance(predictions.begin(), max);
+    return index;
+}
+
+#else
 int predict(cv::Mat img){   //预测数字 mlp
     cv::bitwise_not(img, img);
     vector<float> data;
@@ -104,7 +191,7 @@ int predict(cv::Mat img){   //预测数字 mlp
             data.push_back(img.at<uchar>(i, j)/255.0);
         }
     }
-    
+
     DataChunk * dc = new DataChunkFlat();
     dc->set_data(data); //Mat 转 DataChunk
     
@@ -115,6 +202,7 @@ int predict(cv::Mat img){   //预测数字 mlp
     int index = (int)distance(predictions.begin(), max);
     return index;
 }
+#endif
 
 - (void)processImage:(cv::Mat &)image {
     cv::Mat gray, bw;

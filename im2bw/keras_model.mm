@@ -354,6 +354,8 @@ void keras::KerasModel::load_weights(const string &input_fname) {
       l = new LayerDense();
     } else if(layer_type == "Dropout") {
       continue; // we dont need dropout layer in prediciton mode
+    } else if(layer_type == "GaussianNoise"){
+        continue;
     }
     if(l == 0L) {
       cout << "Layer is empty, maybe it is not defined? Cannot define network." << endl;
