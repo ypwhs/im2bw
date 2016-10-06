@@ -1,7 +1,5 @@
 # im2bw
 
-OpenCV iOS playground
-
 OpenCV iOS 试验场
 
 ## 数字检测
@@ -36,3 +34,8 @@ OpenCV iOS 试验场
 
 ![](https://raw.githubusercontent.com/ypwhs/resources/master/IMG_0456.PNG)
 
+## 数字识别
+
+数字识别使用了多层神经网络，效果如下：
+
+![](https://raw.githubusercontent.com/ypwhs/resources/master/IMG_0859.PNG)
