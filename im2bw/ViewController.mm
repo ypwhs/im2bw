@@ -23,90 +23,6 @@ using namespace keras;
 CvVideoCamera * camera;
 KerasModel * model;
 
-/*
-BNNSActivation relu = {
-    .function = BNNSActivationFunctionRectifiedLinear,
-    .alpha = 0,
-    .beta = 0,
-};
-
-BNNSVectorDescriptor in_vec = {
-    .size = 784,
-    .data_type = BNNSDataTypeFloat32
-};
-
-BNNSVectorDescriptor layer1_vec = {
-    .size = 512,
-    .data_type = BNNSDataTypeFloat32
-};
-
-BNNSVectorDescriptor layer2_vec = {
-    .size = 512,
-    .data_type = BNNSDataTypeFloat32
-};
-
-BNNSVectorDescriptor out_vec = {
-    .size = 11,
-    .data_type = BNNSDataTypeFloat32
-};
-
-float * w1 = (float*)malloc(in_vec.size*layer1_vec.size*sizeof(float));
-float * b1 = (float*)malloc(in_vec.size*layer1_vec.size*sizeof(float));
-
-float * w2 = (float*)malloc(layer1_vec.size*layer2_vec.size*sizeof(float));
-float * b2 = (float*)malloc(layer1_vec.size*layer2_vec.size*sizeof(float));
-
-float * w3 = (float*)malloc(layer2_vec.size*out_vec.size*sizeof(float));
-float * b3 = (float*)malloc(layer2_vec.size*out_vec.size*sizeof(float));
-
-BNNSFullyConnectedLayerParameters layer1_params = {
-    .in_size = in_vec.size,
-    .out_size = layer1_vec.size,
-    .activation = relu,
-    .weights = {
-        .data_type = BNNSDataTypeFloat32,
-        .data = w1
-    },
-    .bias = {
-        .data_type = BNNSDataTypeFloat32,
-        .data = b1
-    }
-};
-
-BNNSFullyConnectedLayerParameters layer2_params = {
-    .in_size = layer1_vec.size,
-    .out_size = layer2_vec.size,
-    .activation = relu,
-    .weights = {
-        .data_type = BNNSDataTypeFloat32,
-        .data = w2
-    },
-    .bias = {
-        .data_type = BNNSDataTypeFloat32,
-        .data = b2
-    }
-};
-
-BNNSFullyConnectedLayerParameters layer3_params = {
-    .in_size = layer2_vec.size,
-    .out_size = out_vec.size,
-    .activation = relu,
-    .weights = {
-        .data_type = BNNSDataTypeFloat32,
-        .data = w3
-    },
-    .bias = {
-        .data_type = BNNSDataTypeFloat32,
-        .data = b3
-    }
-};
-
-BNNSFilter layer1 = BNNSFilterCreateFullyConnectedLayer(&in_vec, &layer1_vec, &layer1_params, NULL);
-BNNSFilter layer2 = BNNSFilterCreateFullyConnectedLayer(&layer1_vec, &layer2_vec, &layer2_params, NULL);
-BNNSFilter layer3 = BNNSFilterCreateFullyConnectedLayer(&layer2_vec, &out_vec, &layer3_params, NULL);
-
-*/
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
@@ -121,6 +37,10 @@ BNNSFilter layer3 = BNNSFilterCreateFullyConnectedLayer(&layer2_vec, &out_vec, &
     
     NSString* file_path = [[NSBundle mainBundle] pathForResource:@"model" ofType:@"txt"];
     model = new KerasModel([file_path UTF8String]);
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        while(true) [self process];
+    });
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -204,37 +124,68 @@ int predict(cv::Mat img){   //预测数字 mlp
 }
 #endif
 
-- (void)processImage:(cv::Mat &)image {
-    cv::Mat gray, bw;
-    cvtColor(image, gray, CV_BGR2GRAY);
+cv::Mat img;
+cv::Mat gray, bw;
+cv::Mat mask(640, 480, CV_8UC3, cv::Scalar(0,0,0));
+cv::Mat mask_out(640, 480, CV_8UC3, cv::Scalar(0,0,0));
+
+bool newimage = false;
+NSLock * newimagelock = [[NSLock alloc] init];
+NSLock * masklock = [[NSLock alloc] init];
+
+- (void) process {
+    usleep(1000);
+    if(!newimage) return;
+    [newimagelock lock];
+    cv::cvtColor(img, gray, CV_BGR2GRAY);
+    [newimagelock unlock];
+    
     adaptiveThreshold(gray, bw, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY_INV, 25, 25);
     
     vector<vector<cv::Point>> rects;
     findContours(bw.clone(), rects, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
     cv::bitwise_not(bw, bw);
     
+    mask = cv::Scalar(0,0,0);
     for( int i = 0; i< rects.size(); i++ ){
         cv::Rect rect = boundingRect(rects[i]);
-        
         int x = rect.x, y = rect.y;
         int w = rect.width, h = rect.height;
         float hw = float(h) / w;
-        if( w < 100 && h < 100 && h > 10 && 1.1 < hw &&  hw < 5) {
-            cv::Mat res = [self resize:bw(rect).clone()];
-            cv::rectangle(image, rect, cv::Scalar(0, 255, 0, 255), 0.5);
+        if( w < 200 && h < 200 && h > 10 && 1.1 < hw &&  hw < 5) {
+            cv::Mat res = [self resize:bw(rect)];
+            cv::rectangle(mask, rect, cv::Scalar(0, 255, 0), 0.5);
             int index = predict(res);
             if(index != 10){
                 char tmp[10];
                 sprintf(tmp, "%d", index);
-                cv::putText(image, tmp, cv::Point(x, y), cv::FONT_HERSHEY_DUPLEX, 0.5, cv::Scalar(255, 0, 0));
+                cv::putText(mask, tmp, cv::Point(x, y), cv::FONT_HERSHEY_DUPLEX, 0.5, cv::Scalar(0, 0, 255));
             }
         }
     }
+    newimage = false;
     
-    cvtColor(image, image, CV_BGR2RGB);
+    [masklock lock];
+    mask_out = mask.clone();
+    [masklock unlock];
+}
+
+cv::Mat mask_not;
+- (void)processImage:(cv::Mat &)image {
+    cv::cvtColor(image, image, CV_RGBA2BGR);
+    [newimagelock lock];
+    img = image.clone();
+    [newimagelock unlock];
+    newimage = true;
     
-    UIImage * outimage = MatToUIImage(image);
+    [masklock lock];
+    cv::cvtColor(mask_out, mask_not, cv::COLOR_BGR2GRAY);
+    cv::threshold(mask_not, mask_not, 10, 255, cv::THRESH_BINARY);
+    mask_out.copyTo(image, mask_not);
+    [masklock unlock];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
+        UIImage * outimage = MatToUIImage(image);
         _imageView.image = outimage;
     });
 }

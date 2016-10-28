@@ -14,7 +14,6 @@
 #import <opencv2/imgproc/imgproc.hpp>
 #import "keras_model.h"
 #import <Accelerate/Accelerate.h>
-#import "im2bw-Swift.h"
 
 @interface ViewController : UIViewController <CvVideoCameraDelegate>
 
