@@ -59,10 +59,11 @@ bool state = true;
     state = !state;
 }
 
--(cv::Mat)resize:(cv::Mat)img { //将图片转换为28*28
-    cv::Mat outimg(28, 28, CV_8U, 255);
-    float fc = 28.0 / img.cols;
-    float fr = 28.0 / img.rows;
+const int width = 28;
+-(cv::Mat)resize:(cv::Mat)img { //将图片转换为正方形
+    cv::Mat outimg(width, width, CV_8U, 255);
+    float fc = (float)width / img.cols;
+    float fr = (float)width / img.rows;
     fc = min(fc, fr);
     fr = fc;
     cv::Size size;
@@ -71,7 +72,7 @@ bool state = true;
     if(size.width == 0 || size.height == 0)return outimg;
     cv::resize(img, img, size);
     int w = img.cols, h = img.rows;
-    int x = (28 - w)/2, y = (28 - h)/2;
+    int x = (width - w)/2, y = (width - h)/2;
     img.copyTo(outimg(cv::Rect(x, y, w, h)));
     return outimg;
 }
