@@ -134,14 +134,17 @@ bool newimage = false;
 NSLock * newimagelock = [[NSLock alloc] init];
 NSLock * masklock = [[NSLock alloc] init];
 
+cv::Mat hsv, yellow;
 - (void) process {
     usleep(1000);
     if(!newimage) return;
     [newimagelock lock];
-    cv::cvtColor(img, gray, CV_BGR2GRAY);
+//    cv::cvtColor(img, gray, CV_BGR2GRAY);
+    cv::cvtColor(img, hsv, CV_BGR2HSV);
     [newimagelock unlock];
-    
-    adaptiveThreshold(gray, bw, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY_INV, 25, 25);
+    cv::inRange(hsv, cv::Scalar(15, 50, 128), cv::Scalar(35, 255, 255), bw);
+
+//    adaptiveThreshold(gray, bw, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY_INV, 25, 25);
     
     vector<vector<cv::Point>> rects;
     findContours(bw.clone(), rects, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
@@ -186,7 +189,7 @@ cv::Mat mask_not;
     [masklock unlock];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIImage * outimage = MatToUIImage(image);
+        UIImage * outimage = MatToUIImage(img);
         _imageView.image = outimage;
     });
 }
