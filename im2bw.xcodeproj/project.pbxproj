@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A11C7BE71DC2657400499920 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A11C7BE61DC2657400499920 /* opencv2.framework */; };
 		A15F25F81D72FDD900874C61 /* keras_model.mm in Sources */ = {isa = PBXBuildFile; fileRef = A15F25F61D72FDD900874C61 /* keras_model.mm */; };
 		A15F25FA1D73180100874C61 /* model.txt in Resources */ = {isa = PBXBuildFile; fileRef = A15F25F91D73180100874C61 /* model.txt */; };
 		A15F260E1D73C0A700874C61 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268791D675AB5003EC205 /* AVFoundation.framework */; };
@@ -21,6 +20,7 @@
 		A1C268481D6756AA003EC205 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1C268461D6756AA003EC205 /* LaunchScreen.storyboard */; };
 		A1C268531D6756AA003EC205 /* im2bwTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C268521D6756AA003EC205 /* im2bwTests.m */; };
 		A1C2685E1D6756AA003EC205 /* im2bwUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C2685D1D6756AA003EC205 /* im2bwUITests.m */; };
+		A1C268711D6757D5003EC205 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268701D6757D5003EC205 /* opencv2.framework */; };
 		A1C268741D675A9A003EC205 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C268731D675A9A003EC205 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +42,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A11C7BE61DC2657400499920 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		A15F25F61D72FDD900874C61 /* keras_model.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = keras_model.mm; sourceTree = "<group>"; };
 		A15F25F71D72FDD900874C61 /* keras_model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keras_model.h; sourceTree = "<group>"; };
 		A15F25F91D73180100874C61 /* model.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = model.txt; sourceTree = "<group>"; };
@@ -62,6 +61,7 @@
 		A1C268591D6756AA003EC205 /* im2bwUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = im2bwUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1C2685D1D6756AA003EC205 /* im2bwUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = im2bwUITests.m; sourceTree = "<group>"; };
 		A1C2685F1D6756AA003EC205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1C268701D6757D5003EC205 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		A1C268721D675A76003EC205 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		A1C268731D675A9A003EC205 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		A1C268771D675AAC003EC205 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -78,8 +78,8 @@
 				A15F26271D73C27800874C61 /* CoreMedia.framework in Frameworks */,
 				A15F26251D73C25E00874C61 /* AssetsLibrary.framework in Frameworks */,
 				A15F260E1D73C0A700874C61 /* AVFoundation.framework in Frameworks */,
-				A11C7BE71DC2657400499920 /* opencv2.framework in Frameworks */,
 				A1C268741D675A9A003EC205 /* Accelerate.framework in Frameworks */,
+				A1C268711D6757D5003EC205 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +127,7 @@
 		A1C268371D6756AA003EC205 /* im2bw */ = {
 			isa = PBXGroup;
 			children = (
-				A11C7BE61DC2657400499920 /* opencv2.framework */,
+				A1C268701D6757D5003EC205 /* opencv2.framework */,
 				A1C2683B1D6756AA003EC205 /* AppDelegate.h */,
 				A1C2683C1D6756AA003EC205 /* AppDelegate.m */,
 				A1C2683E1D6756AA003EC205 /* ViewController.h */,
