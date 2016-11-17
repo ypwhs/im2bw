@@ -55,7 +55,7 @@ bool state = true;
     state = !state;
 }
 
-const int width = 28;
+const int width = 32;
 -(cv::Mat)resize:(cv::Mat)img { //将图片转换为正方形
     cv::Mat outimg(width, width, CV_8U, 255);
     float fc = (float)width / img.cols;
@@ -135,25 +135,30 @@ int predict(cv::Mat img){   //预测数字 mlp
         
         int x = rect.x, y = rect.y;
         int w = rect.width, h = rect.height;
-        float hw = float(h) / w;
-        if( w < 100 && h < 100 && h > 10 && 1.1 < hw &&  hw < 5) {
+//        float hw = float(h) / w;
+        if( w < 100 && h < 100 && h > 10) {
             cv::Mat res = [self resize:bw(rect).clone()];
             cv::rectangle(image, rect, cv::Scalar(0, 255, 0, 255), 0.5);
             int index = predict(res);
-            if(index != 10){
-                char tmp[10];
-                sprintf(tmp, "%d", index);
-                cv::putText(image, tmp, cv::Point(x, y), cv::FONT_HERSHEY_DUPLEX, 0.5, cv::Scalar(255, 0, 0));
-            }
+//            if(index != 10){
+            
+            char tmp[10];
+//            sprintf(tmp, "%d", index);
+            if(index < 10) sprintf(tmp, "%d", index);
+            else if(index < 24)sprintf(tmp, "%c", index-10+'a');
+            else sprintf(tmp, "%c", index-9+'a');
+
+            cv::putText(image, tmp, cv::Point(x, y-5), cv::FONT_HERSHEY_DUPLEX, 0.5, cv::Scalar(255, 0, 0));
+//            }
         }
     }
     
     cvtColor(image, image, CV_BGR2RGB);
     
-//    UIImage * outimage = MatToUIImage(image);
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        _imageView.image = outimage;
-//    });
+    UIImage * outimage = MatToUIImage(image);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _imageView.image = outimage;
+    });
 }
 
 - (void)didReceiveMemoryWarning {

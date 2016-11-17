@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "im2bw/ViewController.mm"
-            timestampString = "500312250.261543"
+            timestampString = "501081943.997673"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
